@@ -1,0 +1,12 @@
+{% extends 'bootstrap/base.html' %} {% block title %}{% endblock %} {% block
+    head %} {{ super() }} {% endblock %} {% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation">
+      <div class="container">
+        <!-- 导航栏左侧的按钮 END -->
+      </div>
+    </div>
+    {% endblock %} {% block content %}
+    <div class="container">
+      {% block page_content %} {% endblock %}
+    </div>
+    {% endblock %}
