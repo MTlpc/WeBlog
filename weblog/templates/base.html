@@ -26,18 +26,65 @@
           <a class="navbar-brand" href="/">WEBLOG</a>
         </div>
         <!-- 导航栏左侧的网站标识 END -->
-        <!-- 导航栏左侧的按钮 START -->
         <div class="navbar-collapse collapse">
+          <!-- 导航栏左侧的按钮 START -->
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
           </ul>
+          <!-- 导航栏左侧的按钮 END -->
+          <!-- 导航栏右侧的下拉菜单 START -->
+          <ul class="nav navbar-nav navbar-right">
+            <!-- current_user 是默认存在的，它是 AnonymousUserMixin 类的实例 
+                   它的 is_authenticated 属性值为 False ，因为这是个匿名用户对象
+                   有用户登录后，该变量为用户对象，is_authenticated 属性值为 True -->
+            {% if not current_user.is_authenticated %}
+            <li><a href="{{ url_for('front.register') }}">注册</a></li>
+            <li><a href="{{ url_for('front.login') }}">登录</a></li>
+            {% else %}
+            <li class="dropdown">
+              <a
+                href="#"
+                class="dropdown-toggle"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                {{ current_user.name }}<span class="caret"></span
+              ></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="{#{ url_for('user.index', name=current_user.name) }#}">
+                    个人主页</a
+                  >
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                  <a href="{#{ url_for('user.change_password') }#}"> 修改密码</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li><a href="/logout">退出登录</a></li>
+              </ul>
+              {% endif %}
+            </li>
+          </ul>
+    
+          <!-- 导航栏右侧的下拉菜单 END -->
         </div>
-        <!-- 导航栏左侧的按钮 END -->
       </div>
     </div>
-    {% endblock %} 
+    {% endblock %}
     {% block content %}
     <div class="container">
+        <!-- 显示页面顶部的 flash 消息 START -->
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="alert alert-{{ category }} alert-dismissble" role="alert">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ message }}
+        </div>
+      {% endfor %}
+      <!-- 显示页面顶部的 flash 消息 END -->
+
       {% block page_content %} 
       {% endblock %}
     </div>

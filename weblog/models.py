@@ -1,6 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 # 导入密码散列包
 from werkzeug.security import generate_password_hash, check_password_hash
+# 导入flask login类
+from flask_login import UserMixin
+from flask import current_app
 
 
 db = SQLAlchemy()
@@ -15,8 +18,8 @@ class Role(db.Model):
         return '<Role: {}>'.format(self.name)
 
 
-# 用户表映射类
-class User(db.Model):
+# 用户表映射类，继承UserMixin
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True, index=True)
     email = db.Column(db.String(64), unique=True, index=True)
