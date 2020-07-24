@@ -9,19 +9,29 @@ from .configs import configs
 # 数据库Model类
 from .models import db, Role, User
 
+# 注册蓝图
 def register_blueprints(app):
     for bp in blueprint_list:
         app.register_blueprint(bp)
 
+
+# 扩展flask
+def register_extensions(app):
+    # 添加Python-BootStrap
+    Bootstrap(app)
+    # 注册实体类
+    db.init_app(app)
+    # 时间日期本地化
+    Moment(app)
+
+
 # 创建flask入口
 def create_app(config):
     app = Flask(__name__)
-
-    Bootstrap(app) 
-    register_blueprints(app)
     # 注册配置类
     app.config.from_object(configs.get(config))
-    # 注册实体类
-    db.init_app(app)
+    register_extensions(app)
+    # 注册蓝图
+    register_blueprints(app)
 
     return app

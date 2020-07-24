@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import render_template
+from datetime import datetime
 
 
 # 创建蓝图
@@ -9,7 +10,8 @@ front = Blueprint('front', __name__)
 # 创建首页视图函数
 @front.route('/')
 def index():
-    return render_template('index.html')
+    date_time = datetime.utcnow()
+    return render_template('index.html', date_time=date_time)
 
 
 # 这里使用的是 app_errorhandler ，它使得该函数对全应用中的视图函数均有效

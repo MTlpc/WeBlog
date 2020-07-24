@@ -42,3 +42,10 @@
       {% endblock %}
     </div>
     {% endblock %}
+
+    <!-- 时间本地化 -->
+    {% block scripts %}
+      {{ super() }}
+      {{ moment.include_moment() }}
+      {{ moment.lang('zh-cn') }}
+    {% endblock %}
